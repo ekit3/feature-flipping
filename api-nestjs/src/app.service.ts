@@ -4,6 +4,19 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 @Injectable({ scope: Scope.REQUEST })
 export class AppService {
+
+  private ListUs =[
+    {
+      id: 1,
+      name: 'US-1',
+      content: 'My us-1 content'
+    },
+    {
+      id: 2,
+      name: 'US-2',
+      content: 'My us-2 content'
+    }
+  ]
   constructor(@Inject(REQUEST) private request: Request) {}
   getHello(): string {
     return 'Hello World!';
@@ -15,6 +28,7 @@ export class AppService {
   }
 
   getUserFeatures(): void {
+    console.log(Users[0])
     return fflip.getFeaturesForUser(Users[0]);
   }
 
@@ -24,5 +38,9 @@ export class AppService {
 
   getUsers() {
     return Users;
+  }
+
+  getUs() {
+    return this.ListUs;
   }
 }
