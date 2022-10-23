@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useEffect, useState } from 'react';
+import { getFeatures } from './services/UserService';
+import { Chip, Divider, List, ListItem, ListItemText } from '@mui/material';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
-function App() {
+const App = () => {
+  const fetchFeatures = useCallback(async () => {
+    const feats = await getFeatures();
+    setFeatures(feats);
+  }, []);
+
+  const [features, setFeatures] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchFeatures().catch((e) => console.log(e));
+  }, [fetchFeatures]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <RouterProvider router={router} />
+
+      <Divider>
+        <Chip label="Available features" />
+      </Divider>
+
+      <List dense={true}>
+        {features.map((feature, index) => {
+          return (
+            <ListItem key={index}>
+              <ListItemText
+                primary={feature.id}
+                secondary={JSON.stringify(feature.criteria)}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+    </>
   );
-}
+};
 
 export default App;

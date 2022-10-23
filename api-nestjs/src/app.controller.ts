@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -10,9 +10,9 @@ export class AppController {
     return this.appService.goBar();
   }
 
-  @Get('/users/features')
-  getUserFeatures() {
-    return this.appService.getUserFeatures();
+  @Get('/users/features/:userName')
+  getUserFeatures(@Param('userName') userName) {
+    return this.appService.getUserFeatures(userName);
   }
 
   @Get('features')
@@ -21,7 +21,7 @@ export class AppController {
   }
 
   @Get('/users')
-  getUsers(){
+  getUsers() {
     return this.appService.getUsers();
   }
 }
