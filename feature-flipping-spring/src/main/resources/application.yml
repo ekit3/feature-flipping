@@ -1,5 +1,5 @@
 spring:
   profiles:
     group:
-      dev: development-version
-      prod: production-version
+      dev: env-dev
+      prod: env-prod
