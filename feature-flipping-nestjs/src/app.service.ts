@@ -61,15 +61,13 @@ export class AppService {
   activateFeature(featureName: string, userName: string): string {
     let user = Users.find( user => user.name === userName)
     if (user !== undefined) {
-      Features.forEach( feat => {
-        switch (feat.id) {
-          case 'canDrinkBeer':
-            user.canDrinkBeer = true;
-            return "Change Success"
+      switch (featureName) {
+        case 'canDrinkBeer':
+          user.canDrinkBeer = true;
+          return "Change Success";
         default:
-          return "This feature cannot be activate by api call"
+           return "This feature cannot be activate by api call"
         }
-      })
     } else {
       return "User do not exist"
     }
@@ -78,15 +76,13 @@ export class AppService {
   desactivateFeature(featureName: string, userName: string): string {
     let user = Users.find( user => user.name === userName)
     if (user !== undefined) {
-      Features.forEach( feat => {
-        switch (feat.id) {
-          case 'canDrinkBeer':
-            user.canDrinkBeer = false;
-            return "Change Success"
-        default:
-          return "This feature cannot be activate by api call"
-        }
-      })
+      switch (featureName) {
+        case 'canDrinkBeer':
+          user.canDrinkBeer = false;
+          return "Change Success";
+          default:
+            return "This feature cannot be activate by api call"
+      }
     } else {
       return "User do not exist"
     }
