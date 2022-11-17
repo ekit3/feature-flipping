@@ -16,13 +16,32 @@ export class AppService {
       content: 'My us-2 content',
     },
   ];
+
   constructor(@Inject(REQUEST) private request: Request) {}
-  getHello(): string {
-    return 'Hello World!';
+
+  goBar(): String {
+    console.log(fflip.getFeaturesForUser(Users[0]));
+    let listName = []
+    let str = ''
+    Users.forEach( user => {
+      if (fflip.isFeatureEnabledForUser('canDrinkBeer', user) === true) {
+        console.log('Welcome to the Closed Beta!');
+        listName.push(user.name)
+        str += `${user.name} can go drink some beer ! \n`
+      }
+    })
+    return str;
+
   }
 
-  goBar(): void {
-    console.log(fflip.getFeaturesForUser(Users[0]));
+  goBarForUser(userName: string): String {
+    let user = Users.find((user) => user.name === userName)
+    console.log(userName)
+    if (fflip.isFeatureEnabledForUser('canDrinkBeer', user) === true) {
+      return `${userName} can go drink some beer ! \n`
+    } else {
+      return `No beer for you ${userName} ! \n`
+    }
   }
 
   getUserFeatures(userName: string): void {
@@ -37,6 +56,36 @@ export class AppService {
 
   getUsers() {
     return Users;
+  }
+
+  activateFeature(featureName: string, userName: string): string {
+    let user = Users.find( user => user.name === userName)
+    if (user !== undefined) {
+      switch (featureName) {
+        case 'canDrinkBeer':
+          user.canDrinkBeer = true;
+          return "Change Success";
+        default:
+           return "This feature cannot be activate by api call"
+        }
+    } else {
+      return "User do not exist"
+    }
+  }
+
+  desactivateFeature(featureName: string, userName: string): string {
+    let user = Users.find( user => user.name === userName)
+    if (user !== undefined) {
+      switch (featureName) {
+        case 'canDrinkBeer':
+          user.canDrinkBeer = false;
+          return "Change Success";
+          default:
+            return "This feature cannot be activate by api call"
+      }
+    } else {
+      return "User do not exist"
+    }
   }
 
   getUs() {
