@@ -85,8 +85,7 @@ let Features = [
   },
   {
     id: 'canDrinkBeer',
-    criteria: { canDrinkBeer: true },
-    enabled: true,
+    criteria: { canDrinkBeer: true }
   },
   {
     id: 'newFeatureRollout',
